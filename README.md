@@ -1,13 +1,5 @@
 # Redux Toolkit
 
-#### React Course
-
-[My React Course](https://www.udemy.com/course/react-tutorial-and-projects-course/?referralCode=FEE6A921AF07E2563CEF)
-
-#### Support
-
-Find the App Useful? [You can always buy me a coffee](https://www.buymeacoffee.com/johnsmilga)
-
 #### Docs
 
 [Redux Toolkit Docs](https://redux-toolkit.js.org/introduction/getting-started)
@@ -135,16 +127,16 @@ import { CartIcon } from '../icons';
 import { useSelector } from 'react-redux';
 
 const Navbar = () => {
-  const { amount } = useSelector((state) => state.cart);
+  const { amount } = useSelector(state => state.cart);
 
   return (
     <nav>
-      <div className='nav-center'>
+      <div className="nav-center">
         <h3>redux toolkit</h3>
-        <div className='nav-container'>
+        <div className="nav-container">
           <CartIcon />
-          <div className='amount-container'>
-            <p className='total-amount'>{amount}</p>
+          <div className="amount-container">
+            <p className="total-amount">{amount}</p>
           </div>
         </div>
       </div>
@@ -189,40 +181,40 @@ import CartItem from './CartItem';
 import { useSelector } from 'react-redux';
 
 const CartContainer = () => {
-  const { cartItems, total, amount } = useSelector((state) => state.cart);
+  const { cartItems, total, amount } = useSelector(state => state.cart);
 
   if (amount < 1) {
     return (
-      <section className='cart'>
+      <section className="cart">
         {/* cart header */}
         <header>
           <h2>your bag</h2>
-          <h4 className='empty-cart'>is currently empty</h4>
+          <h4 className="empty-cart">is currently empty</h4>
         </header>
       </section>
     );
   }
   return (
-    <section className='cart'>
+    <section className="cart">
       {/* cart header */}
       <header>
         <h2>your bag</h2>
       </header>
       {/* cart items */}
       <div>
-        {cartItems.map((item) => {
+        {cartItems.map(item => {
           return <CartItem key={item.id} {...item} />;
         })}
       </div>
       {/* cart footer */}
       <footer>
         <hr />
-        <div className='cart-total'>
+        <div className="cart-total">
           <h4>
             total <span>${total}</span>
           </h4>
         </div>
-        <button className='btn clear-btn'>clear cart</button>
+        <button className="btn clear-btn">clear cart</button>
       </footer>
     </section>
   );
@@ -239,23 +231,23 @@ import { ChevronDown, ChevronUp } from '../icons';
 
 const CartItem = ({ id, img, title, price, amount }) => {
   return (
-    <article className='cart-item'>
+    <article className="cart-item">
       <img src={img} alt={title} />
       <div>
         <h4>{title}</h4>
-        <h4 className='item-price'>${price}</h4>
+        <h4 className="item-price">${price}</h4>
         {/* remove button */}
-        <button className='remove-btn'>remove</button>
+        <button className="remove-btn">remove</button>
       </div>
       <div>
         {/* increase amount */}
-        <button className='amount-btn'>
+        <button className="amount-btn">
           <ChevronUp />
         </button>
         {/* amount */}
-        <p className='amount'>{amount}</p>
+        <p className="amount">{amount}</p>
         {/* decrease amount */}
-        <button className='amount-btn'>
+        <button className="amount-btn">
           <ChevronDown />
         </button>
       </div>
@@ -276,7 +268,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    clearCart: (state) => {
+    clearCart: state => {
       state.cartItems = [];
     },
   },
@@ -290,7 +282,7 @@ export const { clearCart } = cartSlice.actions;
 ```js
 const ACTION_TYPE = 'ACTION_TYPE';
 
-const actionCreator = (payload) => {
+const actionCreator = payload => {
   return { type: ACTION_TYPE, payload: payload };
 };
 ```
@@ -307,7 +299,7 @@ const CartContainer = () => {
 
   return (
     <button
-      className='btn clear-btn'
+      className="btn clear-btn"
       onClick={() => {
         dispatch(clearCart());
       }}
@@ -339,25 +331,25 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    clearCart: (state) => {
+    clearCart: state => {
       state.cartItems = [];
     },
     removeItem: (state, action) => {
       const itemId = action.payload;
-      state.cartItems = state.cartItems.filter((item) => item.id !== itemId);
+      state.cartItems = state.cartItems.filter(item => item.id !== itemId);
     },
     increase: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
+      const cartItem = state.cartItems.find(item => item.id === payload.id);
       cartItem.amount = cartItem.amount + 1;
     },
     decrease: (state, { payload }) => {
-      const cartItem = state.cartItems.find((item) => item.id === payload.id);
+      const cartItem = state.cartItems.find(item => item.id === payload.id);
       cartItem.amount = cartItem.amount - 1;
     },
-    calculateTotals: (state) => {
+    calculateTotals: state => {
       let amount = 0;
       let total = 0;
-      state.cartItems.forEach((item) => {
+      state.cartItems.forEach(item => {
         amount += item.amount;
         total += item.amount * item.price;
       });
@@ -367,8 +359,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { clearCart, removeItem, increase, decrease, calculateTotals } =
-  cartSlice.actions;
+export const { clearCart, removeItem, increase, decrease, calculateTotals } = cartSlice.actions;
 
 export default cartSlice.reducer;
 ```
@@ -386,14 +377,14 @@ const CartItem = ({ id, img, title, price, amount }) => {
   const dispatch = useDispatch();
 
   return (
-    <article className='cart-item'>
+    <article className="cart-item">
       <img src={img} alt={title} />
       <div>
         <h4>{title}</h4>
-        <h4 className='item-price'>${price}</h4>
+        <h4 className="item-price">${price}</h4>
         {/* remove button */}
         <button
-          className='remove-btn'
+          className="remove-btn"
           onClick={() => {
             dispatch(removeItem(id));
           }}
@@ -404,7 +395,7 @@ const CartItem = ({ id, img, title, price, amount }) => {
       <div>
         {/* increase amount */}
         <button
-          className='amount-btn'
+          className="amount-btn"
           onClick={() => {
             dispatch(increase({ id }));
           }}
@@ -412,10 +403,10 @@ const CartItem = ({ id, img, title, price, amount }) => {
           <ChevronUp />
         </button>
         {/* amount */}
-        <p className='amount'>{amount}</p>
+        <p className="amount">{amount}</p>
         {/* decrease amount */}
         <button
-          className='amount-btn'
+          className="amount-btn"
           onClick={() => {
             if (amount === 1) {
               dispatch(removeItem(id));
@@ -444,7 +435,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { calculateTotals } from './features/cart/cartSlice';
 
 function App() {
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems } = useSelector(state => state.cart);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(calculateTotals());
@@ -468,14 +459,14 @@ export default App;
 ```js
 const Modal = () => {
   return (
-    <aside className='modal-container'>
-      <div className='modal'>
+    <aside className="modal-container">
+      <div className="modal">
         <h4>Remove all items from your shopping cart?</h4>
-        <div className='btn-container'>
-          <button type='button' className='btn confirm-btn'>
+        <div className="btn-container">
+          <button type="button" className="btn confirm-btn">
             confirm
           </button>
-          <button type='button' className='btn clear-btn'>
+          <button type="button" className="btn clear-btn">
             cancel
           </button>
         </div>
@@ -528,7 +519,7 @@ export default modalSlice.reducer;
 - App.js
 
 ```js
-const { isOpen } = useSelector((state) => state.modal);
+const { isOpen } = useSelector(state => state.modal);
 
 return (
   <main>
@@ -548,7 +539,7 @@ import { openModal } from '../features/modal/modalSlice';
 
 return (
   <button
-    className='btn clear-btn'
+    className="btn clear-btn"
     onClick={() => {
       dispatch(openModal());
     }}
@@ -569,13 +560,13 @@ const Modal = () => {
   const dispatch = useDispatch();
 
   return (
-    <aside className='modal-container'>
-      <div className='modal'>
+    <aside className="modal-container">
+      <div className="modal">
         <h4>Remove all items from your shopping cart?</h4>
-        <div className='btn-container'>
+        <div className="btn-container">
           <button
-            type='button'
-            className='btn confirm-btn'
+            type="button"
+            className="btn confirm-btn"
             onClick={() => {
               dispatch(clearCart());
               dispatch(closeModal());
@@ -584,8 +575,8 @@ const Modal = () => {
             confirm
           </button>
           <button
-            type='button'
-            className='btn clear-btn'
+            type="button"
+            className="btn clear-btn"
             onClick={() => {
               dispatch(closeModal());
             }}
@@ -617,15 +608,15 @@ const url = 'https://course-api.com/react-useReducer-cart-project';
 
 export const getCartItems = createAsyncThunk('cart/getCartItems', () => {
   return fetch(url)
-    .then((resp) => resp.json())
-    .catch((err) => console.log(error));
+    .then(resp => resp.json())
+    .catch(err => console.log(error));
 });
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   extraReducers: {
-    [getCartItems.pending]: (state) => {
+    [getCartItems.pending]: state => {
       state.isLoading = true;
     },
     [getCartItems.fulfilled]: (state, action) => {
@@ -633,7 +624,7 @@ const cartSlice = createSlice({
       state.isLoading = false;
       state.cartItems = action.payload;
     },
-    [getCartItems.rejected]: (state) => {
+    [getCartItems.rejected]: state => {
       state.isLoading = false;
     },
   },
@@ -646,7 +637,7 @@ const cartSlice = createSlice({
 import { calculateTotals, getCartItems } from './features/cart/cartSlice';
 
 function App() {
-  const { cartItems, isLoading } = useSelector((state) => state.cart);
+  const { cartItems, isLoading } = useSelector(state => state.cart);
 
   useEffect(() => {
     dispatch(getCartItems());
@@ -654,7 +645,7 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className='loading'>
+      <div className="loading">
         <h1>Loading...</h1>
       </div>
     );
@@ -681,20 +672,17 @@ npm install axios
 - cartSlice.js
 
 ```js
-export const getCartItems = createAsyncThunk(
-  'cart/getCartItems',
-  async (name, thunkAPI) => {
-    try {
-      // console.log(name);
-      // console.log(thunkAPI);
-      // console.log(thunkAPI.getState());
-      // thunkAPI.dispatch(openModal());
-      const resp = await axios(url);
+export const getCartItems = createAsyncThunk('cart/getCartItems', async (name, thunkAPI) => {
+  try {
+    // console.log(name);
+    // console.log(thunkAPI);
+    // console.log(thunkAPI.getState());
+    // thunkAPI.dispatch(openModal());
+    const resp = await axios(url);
 
-      return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue('something went wrong');
-    }
+    return resp.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue('something went wrong');
   }
-);
+});
 ```
